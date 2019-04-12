@@ -1,5 +1,5 @@
 ---
-title: "MP3"
+title: "The Accessible Possible Campsites of Macleish Field Station"
 author: "Abby Moss"
 date: "April 6, 2019"
 output: html_document
@@ -33,6 +33,15 @@ res_buffer <- macleish_layers %>%
   st_transform(4326)
 
 
+prev_campsite <- tribble(
+~point, ~lat, ~lon, 
+"Current Campsite", 42.450976, -72.678154
+)
+
+prev_campsite2 <- tribble(
+  ~point, ~lat, ~lon,
+  "Current Campsite", 42.458549, -72.679581
+)
 
 challenge_course2 <- tribble(
   ~point, ~lat, ~lon, 
@@ -41,7 +50,7 @@ challenge_course2 <- tribble(
 
 my_points <- tribble(
   ~point, ~lat, ~lon,
-  "Parking Lot", 42.448171, -72.680681)
+  "Parking Lot", 42.448013, -72.680663)
 
 campsite1 <- tribble(
   ~point, ~lat, ~lon,
@@ -72,7 +81,9 @@ leaflet() %>%
               weight = 1, color = "red") %>%
   addMarkers(data = campsite1, popup = ~point) %>%
   addMarkers(data = campsite2, popup = ~point) %>%
-  addMarkers(data = challenge_course2, popup = ~point)
+  addMarkers(data = challenge_course2, popup = ~point) %>%
+  addMarkers(data = prev_campsite, popup = ~point) %>%
+  addMarkers(data = prev_campsite2, popup = ~point)
 
 
 leaflet() %>%
