@@ -1,11 +1,13 @@
 ---
 title: "The Accessible Possible Campsites of Macleish Field Station"
-author: "Abby Moss"
+author: "Abby Moss and Elise Schatzki-McClain"
 date: "April 6, 2019"
-output: html_document
+output:
+  html_document:
+    code_folding: hide
 ---
 
-```{r}
+```{r, message = FALSE, warning = FALSE}
 
 library(macleish)
 library(sf)
@@ -14,35 +16,43 @@ library(tidyverse)
 
 proj4_aea <- "+proj=aea +lat_1=29.5 +lat_2=45.5 +lat_0=37.5 +lon_0=-96 +x_0=0 +y_0=0 +ellps=GRS80 +datum=NAD83 +units=m +no_defs"
 
+#creates a 100ft buffer around each of the trails
 tr_buffer <- macleish_layers %>%
   pluck("trails") %>%
- st_transform(proj4_aea) %>%
+  #convert to a projection where we can manipulate distance
+  st_transform(proj4_aea) %>%
+  #in meters
   st_buffer(dist = 30.48) %>%
+  #convert back to a projection we can graph
   st_transform(4326)
 
+#ccreates a 200ft buffer around each of the streams
 str_buffer <- macleish_layers %>%
   pluck("streams") %>%
   st_transform(proj4_aea) %>%
   st_buffer(dist = 60.96) %>%
   st_transform(4326)
 
+#creates a 500ft buffer around each of the research buildings
 res_buffer <- macleish_layers %>%
   pluck("research") %>%
   st_transform(proj4_aea) %>%
   st_buffer(dist = 152.4) %>%
   st_transform(4326)
 
-
+#location of previous campsite
 prev_campsite <- tribble(
 ~point, ~lat, ~lon, 
 "Current Campsite", 42.450976, -72.678154
 )
 
+#location of previous campsite
 prev_campsite2 <- tribble(
   ~point, ~lat, ~lon,
   "Current Campsite", 42.458549, -72.679581
 )
 
+#center of the challenge course
 challenge_course2 <- tribble(
   ~point, ~lat, ~lon, 
   "Challenge Courses", 42.451874, -72.679100
@@ -54,31 +64,32 @@ my_points <- tribble(
 
 campsite1 <- tribble(
   ~point, ~lat, ~lon,
-  "Possible Campsite", 42.444811, -72.679101)
+  "1. Possible Campsite", 42.444811, -72.679101)
 
 campsite2 <- tribble(
   ~point, ~lat, ~lon,
-  "Possible Campsite",42.455120, -72.685559)
+  "2. Possible Campsite",42.455120, -72.685559)
 
 leaflet() %>%
   addTiles() %>%
   addPolygons(data = macleish_layers[["buildings"]],
               weight = 1, popup = ~name) %>%
+  #buffers that we want to stay within in green and avoid in red
   addPolygons(data = tr_buffer, 
                weight = 1, color = "green") %>%
   addPolygons(data = str_buffer,
               weight = 1, color = "green") %>%
   addPolygons(data = res_buffer, 
               weight = 1, color = "red", fillOpacity = 0.2) %>%
-  #addPolygons(data = challenge_course, 
-   #           weight = 1, color = "red", fillOpacity = 0.2) %>%
   addPolylines(data = macleish_layers[["streams"]], weight = 2) %>%
+  #plots elevation lines
   addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1) %>%
   addPolygons(data = macleish_layers[["boundary"]],
               weight = 1, fillOpacity = 0.2, color = "green") %>%
   addMarkers(data = my_points, popup = ~point) %>%
   addPolygons(data = macleish_layers[["research"]],
               weight = 1, color = "red") %>%
+  #plots campsites and challenge course
   addMarkers(data = campsite1, popup = ~point) %>%
   addMarkers(data = campsite2, popup = ~point) %>%
   addMarkers(data = challenge_course2, popup = ~point) %>%
@@ -97,11 +108,12 @@ leaflet() %>%
   addPolylines(data = macleish_layers[["streams"]], weight = 2) %>%
   addPolygons(data = macleish_layers[["boundary"]],
               weight = 1, fillOpacity = 0.2, color = "green") %>%
+  #plots elevation lines
   addPolylines(data = pluck(macleish_layers, "contours_3m"), weight = 1) %>%
   addMarkers(data = my_points, popup = ~point) %>%
   addPolygons(data = macleish_layers[["research"]],
               weight = 1, color = "red") %>%
-  #addMarkers(data = macleish_layers[["challenge_courses"]], popup = "challenge course") %>%
+  #plots campsites and challenge course
   addMarkers(data = campsite1, popup = ~point) %>%
   addMarkers(data = campsite2, popup = ~point) %>%
   addMarkers(data = challenge_course2, popup = ~point)
