@@ -118,6 +118,32 @@ leaflet() %>%
   addMarkers(data = campsite2, popup = ~point) %>%
   addMarkers(data = challenge_course2, popup = ~point)
   
-  
 
 ```
+
+
+Analysis:
+
+We are trying to find two possible accessible campsite locations for Macleish field station. Here, we propose two new campsites at Macleish field station that meet site requirements. Both of the sites reflect the requirements that are within 200m of a stream and 100m of a trail. They are also both 500 or more meters away from a research station or an element of a challenge course. After adding the elevation data to the graph, it became clear that the areas we are looking at are fairly flat portions of land, especially considering that the net elevation difference for the whole Macleish property is less than 1000 ft. The sites are a little further than ½ mile from the parking lot, but generally, the distances between the sites and the lot are somewhere between ½ mile and 1 mile. The one issue we did not address was having a unique forest type in the new proposed campsites. This is an aspect that would be incredibly hard to use data to determine. We could not figure out how to make sure that the forest types at these two proposed campsites would be a different forest type than at the existing campsites.
+
+We would like Macleish staff to consider these two locations for a future campsite. They meet all the necessary requirements and they are really accessible locations. Proposed Campsite 1 is the one we feel is the better option of the two. This is because it is in a fairly remote area far from the half of the property that has research stations, buildings, and challenge courses. The other proposed campsite is also good and meets all of the requirements. This site is just in a more explored area of the property and therefore, and maybe would not be as nice or interesting to hike to. Even if it is not in the budget to make platforms for tents, maybe there could just be some area cleared so that there could be a tent set up on the ground. Since it is a relatively flat area, clearing some land to be able to set up tents and adding the location as a destination on trail maps would be enough to create a usable, nice space for Smith students. It would also be less expensive than creating a full campsite. It is hard to estimate cost, since the average cost per square foot for land clearing ranges between $1.28 and $2, but using that metric, a 25 square foot area would be between $32 and $50, and a 50 square foot are would be between $64 and $100. There would be very little environmental impact because there would be no new trails created and no construction happening on the site. However, there might be some trouble using the site during the winter or early spring due to the snow and rain that might make the site too muddy to use. This more rustic campsite could be an affordable and fun addition to the already great field station property.
+
+
+Footnoes:
+
+@Manual{R-base,
+  title = {abigailmoss/sds_spacialdata_mp3},
+  author = {{Abby Moss and Elise Schatzki-McClain}},
+  address = {Northampton, Massachusetts},
+  year = {2019},
+  url = {https://github.com/abigailmoss/sds_spacialdata_mp3},
+}
+
+@Manual{R-base,
+  title = {How Much Does It Cost To Clear Land Or Prepare A Construction Site?},
+  author = {{Unknown}},
+  organization = {HomeAdvisor},
+  address = {Unknown},
+  year = {2019},
+  url = {https://www.homeadvisor.com/cost/landscape/clear-land-or-prepare-a-construction-site/},
+}
